@@ -1,4 +1,5 @@
-package app
+package app.controller
+import app.model.Greeting
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
@@ -8,18 +9,17 @@ import java.util.concurrent.atomic.AtomicLong
 class GreetingController {
 
     val counter = AtomicLong()
-    val names = ArrayList<Greeting>()
+    val greetings = ArrayList<Greeting>()
 
     @GetMapping("/greeting")
     fun greeting(@RequestParam(value = "name", defaultValue = "World") name: String): Greeting {
-        val greeting = Greeting(counter.incrementAndGet(), "Hello, $name")
-        names.add(greeting)
-        return greeting
+        greetings.add(Greeting(counter.incrementAndGet(), "Hello, $name"))
+        return greetings.last()
     }
 
     @GetMapping("/greetings")
     fun getGreetings(): List<Greeting> {
-        return names
+        return greetings
     }
 
 }
